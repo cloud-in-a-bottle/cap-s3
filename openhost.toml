@@ -1,0 +1,26 @@
+[app]
+name = "cap-s3"
+version = "0.1.0"
+description = "MinIO S3-compatible storage for self-hosted Cap. Runs behind the OpenHost router with a Host-rewriting Caddy sidecar that restores the original Host from X-Forwarded-Host, so Cap's browser-facing SigV4 presigned URLs validate over the normal HTTPS subdomain."
+
+[runtime.container]
+image = "Dockerfile"
+# Caddy sidecar port. The router reverse-proxies the cap-s3.<zone>
+# subdomain here; Caddy restores Host from X-Forwarded-Host and
+# forwards to MinIO's S3 API on 127.0.0.1:9000.
+port = 8080
+
+[routing]
+health_check = "/minio/health/live"
+# S3 clients (the browser via presigned URLs, and cap-web server-side)
+# authenticate with SigV4 access keys, not OpenHost owner-SSO, so the
+# owner-login gate must be off for every path.
+public_paths = ["/"]
+
+[resources]
+memory_mb = 512
+cpu_cores = 0.5
+
+[data]
+# Object data + MinIO config live under OPENHOST_APP_DATA_DIR.
+app_data = true
