@@ -1,7 +1,7 @@
 [app]
 name = "cap-s3"
 version = "0.1.0"
-description = "MinIO S3-compatible storage for self-hosted Cap. Runs behind the OpenHost router with a Host-rewriting Caddy sidecar that restores the original Host from X-Forwarded-Host, so Cap's browser-facing SigV4 presigned URLs validate over the normal HTTPS subdomain."
+description = "MinIO S3-compatible storage for self-hosted Cap. Runs behind the Cloud in a Bottle router with a Host-rewriting Caddy sidecar that restores the original Host from X-Forwarded-Host, so Cap's browser-facing SigV4 presigned URLs validate over the normal HTTPS subdomain."
 
 [runtime.container]
 image = "Dockerfile"
